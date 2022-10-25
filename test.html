@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="//d3js.org/d3.v4.min.js"></script>
+	<!-- <script src="//d3js.org/d3.v5.min.js"></script> -->
+	
+
+	<title></title>
+</head>
+<body>
+    <div style="text-align: center;">
+    <div id="d3-container" />
+  </div>
+<script>
+
+d3.csv("data/deaths_age_sex.csv",function(data) {
+  var age0_m = []
+  var age0_f = []
+  var age1_m=[]
+  var age1_f=[]
+  var age2_m=[]
+  var age2_f=[]
+  var age3_m=[]
+  var age3_f=[]
+  var age4_m=[]
+  var age4_f=[]
+  var age5_m=[]
+  var age5_f=[]
+            for (var i = 0; i < data.length; i++) {
+
+              if(data[i].age==0 && data[i].gender == 1){
+                age0_f.push(data[i].age)
+
+              }
+
+              else if(data[i].age == 0 && data[i].gender == 0){
+              	age0_m.push(data[i].age)
+
+              }
+
+              else if(data[i].age == 1 && data[i].gender == 1){
+              	age1_f.push(data[i].age)
+
+              }
+              else if(data[i].age == 1 && data[i].gender == 0){
+              	age1_m.push(data[i].age)
+
+              }
+               else if(data[i].age == 2 && data[i].gender == 1){
+              	age2_f.push(data[i].age)
+
+              }
+              else if(data[i].age == 2 && data[i].gender == 0){
+              	age2_m.push(data[i].age)
+
+              }
+               else if(data[i].age == 3 && data[i].gender == 1){
+              	age3_f.push(data[i].age)
+
+              }
+              else if(data[i].age == 3 && data[i].gender == 0){
+              	age3_m.push(data[i].age)
+
+              }
+               else if(data[i].age == 4 && data[i].gender == 1){
+              	age4_f.push(data[i].age)
+
+              }
+              else if(data[i].age == 4 && data[i].gender == 0){
+              	age4_m.push(data[i].age)
+
+              }
+               else if(data[i].age == 5 && data[i].gender == 1){
+              	age5_f.push(data[i].age)
+
+              }
+              else if (data[i].age == 5 && data[i].gender == 0){
+              	age5_m.push(data[i].age)
+
+              }
+              else{
+              	console.log("No")
+              }
+    }
+var data_1 = [{
+    	"Age":"0-10",
+    	"Male":age0_m.length,
+    	"Female":age0_f.length,
+},
+{
+    	"Age":"11-20",
+    	"Male":age1_m.length,
+    	"Female":age1_f.length,
+},{
+    	"Age":"21-40",
+    	"Male":age2_m.length,
+    	"Female":age2_f.length,
+},{
+    	"Age":"41-60",
+    	"Male":age3_m.length,
+    	"Female":age3_f.length,
+},{
+    	"Age":"61-80",
+    	"Male":age4_m.length,
+    	"Female":age4_f.length,
+},{
+    	"Age":">80",
+    	"Male":age5_m.length,
+    	"Female":age5_f.length,
+}]
+
+console.log(data_1)
+var name = ["Male","Female"]
+var margin = {top: 10, right: 30, bottom: 20, left: 50},
+    width = 560 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+
+var svg = d3.select("#d3-container")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+var subgroups = ["Age","Male","Female"]
+
+console.log(subgroups);
+var Age = d3.map(data_1, function(d){return(d.Age)}).keys()
+console.log(Age);
+
+var x = d3.scaleBand()
+      .domain(Age)
+      .range([0, width])
+      .padding([0.2])
+  svg.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x).tickSize(0));
+
+// Add Y axis
+  var y = d3.scaleLinear()
+    .domain([0,100])
+    .range([ height, 0 ]);
+  svg.append("g")
+    .call(d3.axisLeft(y));
+
+
+var xSubgroup = d3.scaleBand()
+    .domain(subgroups)
+    .range([0, x.bandwidth()])
+    .padding([0.05])
+
+  // color palette = one color per subgroup
+  var color = d3.scaleOrdinal()
+    .domain(subgroups)
+    .range(['#e41a1c','#377eb8'])
+
+ var size = 20
+
+svg.selectAll("mydots")
+  .data(name)
+  .enter()
+  .append("rect")
+    .attr("x", 400)
+    .attr("y", function(d,i){ return 0 + i*(size+5)})  
+    .attr("width", size)
+    .attr("height", size)
+    .style("fill", function(d){ return color(d)})
+
+svg.selectAll("mylabels")
+  .data(name)
+  .enter()
+  .append("text")
+    .attr("x", 400 + size*1.2)
+    .attr("y", function(d,i){ return 0  + i*(size+5) + (size/2)})
+    .style("fill", function(d){ return color(d)})
+    .text(function(d){ return d})
+    .attr("text-anchor", "left")
+    .style("alignment-baseline", "middle")
+
+  svg.append("g")
+    .selectAll("g")
+    // Enter in data = loop group per group
+    .data(data_1)
+    .enter()
+    .append("g")
+      .attr("transform", function(d) { return "translate(" + x(d.Age) + ",0)"; })
+    .selectAll("rect")
+    .data(function(d) { return subgroups.map(function(key) { return {key: key, value: d[key]}; }); })
+    .enter().append("rect")
+      .attr("x", function(d) { return xSubgroup(d.key); })
+      .attr("y", function(d) { return y(d.value); })
+      .attr("width", xSubgroup.bandwidth())
+      .attr("height", function(d) { return height - y(d.value); })
+      .attr("fill", function(d) { return color(d.key); });
+
+});
+
+ 
+</script>
+</body>
+</html>

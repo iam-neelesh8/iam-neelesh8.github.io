@@ -1,0 +1,760 @@
+
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head>
+  <title>Data Visulization Project 1 </title>
+</head>
+<script src= "https://d3js.org/d3.v4.min.js"> </script>
+<style type="text/css">
+	.bar { fill: steelblue; }
+
+#head{
+
+	position: relative;
+	top: 0;
+	width: 100%;
+	height: 1;
+	text-align: center;
+
+}
+
+
+.button {
+  background-color: orange;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+
+
+
+</style>
+  
+<body>
+
+	<div id='head' class='one' >
+  
+<ul style="text-align: right;list-style-type: none ">
+
+  <li>
+  	<button class="button" href = "index.html">Home</button>
+
+  	<a href="documentation.html"><button class="button" >Documentation</button></a>
+  <button class="button"> About me</button>
+  <button class="button">Video Explanation</button></li>
+  
+</ul>
+
+<h2 style="text-align:center;">Jhon Snow Colara Map </h2>
+</div>
+
+
+    
+
+     <div>
+    <div id="d3-container" />
+  </div>
+  <div id = 'two' style=" float:left" >
+
+ 
+    <svg id="gfg" width=600 height = 600>
+    </svg>
+    </div><div id = "ledgend"style="text-align: center;margin:0px;">
+
+<table style="border:0px solid black;align: center;">
+  <tr style="border:0px solid black;">
+    <td style="border:0px solid black;"><svg height="50" width="100">
+  <circle cx="50" cy="25" r="5" stroke="red" stroke-width="1" fill="red" />
+</svg></th>
+    <td style="border:0px solid black;text-align: center;">male</th>
+    
+  </tr>
+  <tr style="border:0px solid black;">
+    <td style="border:0px solid black;"><svg height="50" width="100">
+  <circle cx="50" cy="25" r="5" stroke="blue" stroke-width="1" fill="blue" />
+</svg></td>
+    <td style="border:0px solid black;">Female</td>
+      </tr>
+  <tr style="border:0px solid black;">
+    <td style="border:0 solid black; text-align: center;"><svg width="10" height="10">
+  <rect width="10" height="10" style="fill:green" />
+   
+</svg></td>
+    <td style="text-align:cente;">Pumps</td>
+    
+  </tr>
+</table>
+
+
+
+	
+	
+
+
+</div>
+    
+<div id = "one" style="height:600; width: 600;"></div>
+
+
+  <script>
+
+var margin_1 = {top: 70, right:20, bottom: -10, left: 40},
+    width_1 = 700 - margin_1.left - margin_1.right,
+    height_1 = 400 - margin_1.top - margin_1.bottom;
+
+ var x_1 = d3.scaleBand()
+          .range([0, width_1])
+          .padding(0.1);
+var y_1 = d3.scaleLinear()
+          .range([height_1, 0]);
+var svg_1 = d3.select("#one").append("svg")
+    .attr("width", width_1 + margin_1.left + margin_1.right)
+    .attr("height", height_1 + margin_1.top + margin_1.bottom+200)
+    .append("g")
+    .attr("transform", 
+          "translate(" + margin_1.left + "," + margin_1.top + ")");
+
+var height =600;
+//The SVG Container
+
+var margin = {left:0, right:20, top:30, bottom:2};
+var draw_map = d3.select("#gfg")
+				 .append("svg")
+               	 .attr("width", "800")
+               	 .attr("height", "800")
+               	 .attr("transform","translate(0,0)")
+               	 .append("g")
+                 .attr("transform","translate("+margin.left+","+margin.top+")");
+
+ d3.json("data/streets.json").get(function(error, data){
+ 	d3.csv("data/pumps.csv",function(data_2){
+ 		d3.csv("data/deaths_age_sex.csv",function(data_3){
+ 			d3.csv("data/deathdays.csv",function(data_4){
+
+
+ data_4.forEach(function(d) {
+    d.deaths = +d.deaths;
+  });
+ x_1.domain(data_4.map(function(d) { return d.date; }));
+ y_1.domain([0, d3.max(data_4, function(d) { return d.deaths; })]);
+ console.log(d3.max(data_4, function(d) { return d.deaths; }))
+
+
+ 	for(var i = 0; i<data.length; i++ ){
+ 		data_line = []
+
+ 		for(var j = 0; j<data[i].length; j++){
+ 		
+ 		data_line.push(data[i][j])
+
+ 		}
+
+ 		//console.log(data_line)
+ var Gen = d3.line()
+  .x(function(data_line,i) { return data_line.x*30; })
+  .y(function(data_line,i) { return height-data_line.y*30; })
+  .curve(d3.curveLinear);
+
+ var linegraph = draw_map.append("path")
+ 
+  .attr("d", Gen(data_line))
+  .attr("fill", "none")
+  .attr("stroke-width",2)
+  .attr("stroke", "black")
+
+
+
+}
+
+// ['PORTLAND STREET',
+//  'BROD STREET',
+//  'GREAT MARIBOROUGH STREET',
+//  'REGENT STREET',
+//  'OXFORD STREET',
+//  'DEAN STREET',
+//  'WORK HOUSE,'BREWER STREET']
+
+
+var streets_names = [{name:"OXFORD STREET",x:250,y:120},
+							{name:'PORTLAND STREET',x:500,y:140},
+							{name:'BREWER STREET',x:100,y:70},
+							{name:'GREAT MARIBOROUGH STREET',x:100,y:90},
+							{name:'REGENT STREET',x:40,y:140},
+							{name:'DEAN STREET',x:400,y:120},
+							{name:'WORK HOUSE',x:200,y:100}]
+
+			 draw_map.selectAll('rect.day')
+                .data(data_2)
+                .enter()
+                .append('rect')
+                .style('fill', 'green')
+               
+                .attr('width', 15)
+  				.attr('height', 15)
+                .attr('stroke-width', 4)
+                .attr('x', (function(data_2,i) { return data_2.x*30; }))
+                .attr('y', (function(data_2,i) { return height-data_2.y*30; }))
+
+
+                draw_map.append("text")
+                    .attr("transform", "rotate(-10)")
+                    .attr("y", 140 )
+                    .attr("x", 170)
+                    .attr("dy", "1em")
+                    .style("text-anchor", "middle")
+                    .attr("font-size","12")
+                    .attr("font-weight","bold")
+                    .text("OXFORD STREET");
+                    draw_map.append("text")
+                    .attr("transform", "rotate(-15)")
+                    .attr("y", 240 )
+                    .attr("x", 200)
+                    .attr("dy", "1em")
+                    .style("text-anchor", "middle")
+                    
+                    .attr("font-size","12")
+                    .attr("font-weight","bold")
+                    .text("PORTLAND STREET");
+                    draw_map.append("text")
+                    .attr("transform", "rotate(-14)")
+                    .attr("y", 310 )
+                    .attr("x", 320)
+                    .attr("dy", "1em")
+                    .style("text-anchor", "middle")
+                    
+                    .attr("font-size","12")
+                    .attr("font-weight","bold")
+                    .text("BREWER STREET");
+                    draw_map.append("text")
+                    .attr("transform", "rotate(-10)")
+                    
+                    .attr("y", 460 )
+                    .attr("x", 180)
+                    .attr("dy", "1em")
+                    .style("text-anchor", "middle")
+                    
+                    .attr("font-size","12")
+                    .attr("font-weight","bold")
+                    .text("GREAT MARIBOROUGH STREET");
+                    draw_map.append("text")
+                    .attr("transform", "rotate(0)")
+                    
+                    .attr("y", 120 )
+                    .attr("x", 530)
+                    .attr("dy", "1em")
+                    .style("text-anchor", "middle")
+            
+                    .attr("font-size","12")
+                    .attr("font-weight","bold")
+                    .text("WORK HOUSE");
+
+
+
+
+              var toolpin = d3.select("#gfg")
+				 .append("svg")
+               	 // .attr("width", "00")
+               	 // .attr("height", "00")
+               	 .data(data_3)
+               	 .style('fill',  (function(data_mouse,i){
+                	if (data_mouse.gender == 0){return "red"}
+                 	else{return "blue" } 
+                 }))
+               	 .attr("transform","translate(0,0)")
+               	 .append("g")
+                 .attr("transform","translate("+margin.left+","+margin.top+")")
+                 .selectAll('circle')
+                 .style('opacity','1')
+                 .attr("class","tooltip")
+                 .attr('r', 5)
+                .attr('stroke-width', 5)
+
+                .attr('cx', (function(data_3,i) { return data_mouse.x*30; }))
+                .attr('cy', (function(data_3,i) { return height-data_mouse.y*30; }))
+
+
+
+   function tool(data){
+
+
+         toolpin
+				.data(data)
+                 .enter()
+                .append('circle')
+                .style('fill',  (function(data_mouse,i){
+                	if (data_mouse.gender == 0){return "red"}
+                 	else{return "blue" } 
+                 }))
+                
+                .attr('r', 5)
+                .attr('stroke-width', 5)
+                .attr('cx', (function(data_mouse,i) { return data_mouse.x*30; }))
+                .attr('cy', (function(data_mouse,i) { return height-data_mouse.y*30; }))
+
+
+             }
+     function tool_1(data){
+
+
+         var toolpin = d3.select("#gfg")
+				 .append("svg")
+               	 // .attr("width", "00")
+               	 // .attr("height", "00")
+               	 .attr("transform","translate(0,0)")
+               	 .append("g")
+                 .attr("transform","translate("+margin.left+","+margin.top+")")
+                 .selectAll('circle')
+				.data(data)
+                 .enter()
+                .append('circle')
+                .style('fill',  (function(data_mouse,i){
+                	if (data_mouse.gender == 0){return "white"}
+                 	else{return "white" } 
+                 }))
+                .style('opacity','0')
+                .attr('r', 5)
+                .attr('stroke-width', 5)
+                .attr('cx', (function(data_mouse,i) { return data_mouse.x*30; }))
+                .attr('cy', (function(data_mouse,i) { return height-data_mouse.y*30; }))
+
+
+
+             }
+                 
+
+                
+var deaths_dots = function (d,i){
+	count = 0
+	var data_mouse  = []
+	for(k=0;k<=i;k++){
+
+		 count =count + data_4[k].deaths
+		// for(j=0;j<data_4[k].deaths;j++){
+		// 	count =count+1
+
+		// data_mouse.push(data_3[count])
+	// }
+}
+
+data_mouse = data_3.slice(0,count)
+
+// for(j=0;j<count;j++){
+
+// 	data_mouse.push(data_3[j])
+
+// }
+	console.log(i)
+	tool(data_mouse)
+
+	// for(k = 0;k<data_mouse.length;k++){
+
+
+	// console.log(data_mouse[k].x)
+
+
+
+	// }
+
+}
+
+
+
+
+var deaths_dots_1 = function (d,i){
+
+
+	count = 0
+	var data_mouse  = []
+	for(k=0;k<=i;k++){
+
+		 count =count + data_4[k].deaths
+		// for(j=0;j<data_4[k].deaths;j++){
+		// 	count =count+1
+
+		// data_mouse.push(data_3[count])
+	// }
+}
+
+data_mouse = data_3.slice(0,count)
+
+// for(j=0;j<count;j++){
+
+// 	data_mouse.push(data_3[j])
+
+// }
+	console.log(i)
+	tool(data_mouse)
+	toolpin.style('opacity',"0")
+
+
+
+
+// 	var data_mouse  = []
+// 	for(k=0;k<=i;k++){
+
+// 		for(j=0;j<data_4[k].deaths;j++){
+
+// 		data_mouse.push(data_3[j])
+
+
+		
+
+// 	}
+// }
+
+// var dt = draw_map.select("gfg")
+// 				.append("svg")
+//                	 // .attr("width", "00")
+//                	 // .attr("height", "00")
+//                	 .attr("transform","translate(0,0)")
+//                	 .append("g")
+//                  .attr("transform","translate("+margin.left+","+margin.top+")")
+//                  .selectAll('rect.day')
+//                 .data(data_2)
+//                 .enter()
+//                 .append('rect')
+//                 .style('fill', 'green')
+               
+//                 .attr('width', 15)
+//   				.attr('height', 15)
+//                 .attr('stroke-width', 4)
+//                 .attr('x', (function(data_2,i) { return data_2.x*30; }))
+//                 .attr('y', (function(data_2,i) { return height-data_2.y*30; }))
+
+	// console.log(data_mouse)
+	// tool_1(data_mouse)
+
+}
+
+
+       svg_1.selectAll(".bar")
+      .data(data_4)
+      .enter().append("rect")
+      .attr("class", "bar")
+
+      .attr("x", function(d) { return x_1(d.date); })
+      .attr("width", x_1.bandwidth())
+      .attr("y", function(d) { return y_1(d.deaths); })
+      .attr("height", function(d) { return height_1 - y_1(d.deaths); })
+      .on("mouseover",deaths_dots)
+      //on("mouseout",deaths_dots_1);
+      // .on("mouseover", function(d, i) {
+
+      	// data_mouse = 
+      	// // data_male = []
+      	// // data_female = []
+      	
+      	
+      	// for(i=0;i<d.deaths;i++){
+      		
+      	// 	data_mouse.push(data_3[i])
+      	// }
+      	// 	if(data_3[i].gender == 0){
+      	// 		data_male.push(data_3[i])
+      			
+      	// 	}
+      	// 	else{
+      	// 		data_female.push(data_3[i])
+      	// 	}
+
+
+
+      	// }
+      	// console.log(data_mouse)
+
+      	// draw_map.selectAll('circle')
+       //          .data(data_mouse)
+       //          .enter()
+       //          .append('circle')
+       //          // .style('fill','red')
+       //          .style('fill', (function(data_mouse,i){
+       //          	if (data_mouse.gender == 0){return "red"}
+       //          	else{return "blue" } 
+       //          }))
+
+       //          .attr('r', 7)
+                
+       //          .attr('stroke-width', 2)
+       //          .attr('cx', (function(d,i) {return d.x*30}))
+       //          .attr('cy', (function(d,i) { return height-d.y*30; }))
+               
+
+
+       //     draw_map.selectAll('circle')
+       //          .data(data_female)
+       //          .enter()
+       //          .append('circle')
+       //          .style('fill', 'blue')
+       //          .attr('r', 4)
+                
+       //          .attr('stroke-width', 1)
+       //          .attr('cx', (function(data_female,i) { return data_female.x*30; }))
+       //          .attr('cy', (function(data_3,i) { return height-data_female[i].y*30; }))
+       //          .attr('class', 'pump');
+
+      	
+
+            // });
+
+  // Add x axis
+  svg_1.append("g")
+      .attr("transform", "translate(0," + height_1 + ")")
+      .call(d3.axisBottom(x_1))
+      .selectAll("text")  
+          .style("text-anchor", "end")
+          .attr("dx","-.8em")
+          .attr("dy","-0.8em")
+          .attr("transform", "rotate(-90)" )
+          
+    
+     	  
+
+  // Add y axis
+  svg_1.append("g")
+      .call(d3.axisLeft(y_1))
+
+      ;
+
+
+ svg_1.append("text")
+    .attr("class", "x label")
+    .attr("text-anchor", "end")
+    .attr("x", 390)
+    .attr("y", 395)
+    .text("Deaths per day");
+
+    svg_1.append("text")
+    .attr("class", "x label")
+    .attr("text-anchor", "end")
+    .attr("x", -70)
+    .attr("y", -30)
+    .attr("transform", "rotate(-90)")
+    .text("Number of deaths");
+
+
+   
+
+    
+
+            });
+
+            });
+ 	});
+
+
+ });  
+</script>
+<script >
+	
+d3.csv("data/deaths_age_sex.csv",function(data) {
+  var age0_m = []
+  var age0_f = []
+  var age1_m=[]
+  var age1_f=[]
+  var age2_m=[]
+  var age2_f=[]
+  var age3_m=[]
+  var age3_f=[]
+  var age4_m=[]
+  var age4_f=[]
+  var age5_m=[]
+  var age5_f=[]
+            for (var i = 0; i < data.length; i++) {
+
+              if(data[i].age==0 && data[i].gender == 1){
+                age0_f.push(data[i].age)
+
+              }
+
+              else if(data[i].age == 0 && data[i].gender == 0){
+              	age0_m.push(data[i].age)
+
+              }
+
+              else if(data[i].age == 1 && data[i].gender == 1){
+              	age1_f.push(data[i].age)
+
+              }
+              else if(data[i].age == 1 && data[i].gender == 0){
+              	age1_m.push(data[i].age)
+
+              }
+               else if(data[i].age == 2 && data[i].gender == 1){
+              	age2_f.push(data[i].age)
+
+              }
+              else if(data[i].age == 2 && data[i].gender == 0){
+              	age2_m.push(data[i].age)
+
+              }
+               else if(data[i].age == 3 && data[i].gender == 1){
+              	age3_f.push(data[i].age)
+
+              }
+              else if(data[i].age == 3 && data[i].gender == 0){
+              	age3_m.push(data[i].age)
+
+              }
+               else if(data[i].age == 4 && data[i].gender == 1){
+              	age4_f.push(data[i].age)
+
+              }
+              else if(data[i].age == 4 && data[i].gender == 0){
+              	age4_m.push(data[i].age)
+
+              }
+               else if(data[i].age == 5 && data[i].gender == 1){
+              	age5_f.push(data[i].age)
+
+              }
+              else if (data[i].age == 5 && data[i].gender == 0){
+              	age5_m.push(data[i].age)
+
+              }
+              else{
+              	console.log("No")
+              }
+    }
+var data_1 = [{
+    	"Age":"0-10",
+    	"Male":age0_m.length,
+    	"Female":age0_f.length,
+},
+{
+    	"Age":"11-20",
+    	"Male":age1_m.length,
+    	"Female":age1_f.length,
+},{
+    	"Age":"21-40",
+    	"Male":age2_m.length,
+    	"Female":age2_f.length,
+},{
+    	"Age":"41-60",
+    	"Male":age3_m.length,
+    	"Female":age3_f.length,
+},{
+    	"Age":"61-80",
+    	"Male":age4_m.length,
+    	"Female":age4_f.length,
+},{
+    	"Age":">80",
+    	"Male":age5_m.length,
+    	"Female":age5_f.length,
+}]
+
+console.log(data_1)
+var name = ["Male","Female"]
+var margin = {top: 90, right: 30, bottom: 20, left: 50},
+    width = 560 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+
+var svg = d3.select("#d3-container")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom+30)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+var subgroups = ["Age","Male","Female"]
+
+console.log(subgroups);
+var Age = d3.map(data_1, function(d){return(d.Age)}).keys()
+console.log(Age);
+
+var x = d3.scaleBand()
+      .domain(Age)
+      .range([0, width])
+      .padding([0.2])
+  svg.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x).tickSize(0));
+
+// Add Y axis
+  var y = d3.scaleLinear()
+    .domain([0,100])
+    .range([ height, 0 ]);
+  svg.append("g")
+    .call(d3.axisLeft(y));
+
+
+var xSubgroup = d3.scaleBand()
+    .domain(subgroups)
+    .range([0, x.bandwidth()])
+    .padding([0.05])
+
+  // color palette = one color per subgroup
+  var color = d3.scaleOrdinal()
+    .domain(subgroups)
+    .range(['#e41a1c','#377eb8'])
+
+ var size = 20
+
+svg.selectAll("mydots")
+  .data(name)
+  .enter()
+  .append("rect")
+    .attr("x", 400)
+    .attr("y", function(d,i){ return 0 + i*(size+5)})  
+    .attr("width", size)
+    .attr("height", size)
+    .style("fill", function(d){ return color(d)})
+
+svg.selectAll("mylabels")
+  .data(name)
+  .enter()
+  .append("text")
+    .attr("x", 400 + size*1.2)
+    .attr("y", function(d,i){ return 0  + i*(size+5) + (size/2)})
+    .style("fill", function(d){ return color(d)})
+    .text(function(d){ return d})
+    .attr("text-anchor", "left")
+    .style("alignment-baseline", "middle")
+
+  svg.append("g")
+    .selectAll("g")
+    // Enter in data = loop group per group
+    .data(data_1)
+    .enter()
+    .append("g")
+      .attr("transform", function(d) { return "translate(" + x(d.Age) + ",0)"; })
+    .selectAll("rect")
+    .data(function(d) { return subgroups.map(function(key) { return {key: key, value: d[key]}; }); })
+    .enter().append("rect")
+      .attr("x", function(d) { return xSubgroup(d.key); })
+      .attr("y", function(d) { return y(d.value); })
+      .attr("width", xSubgroup.bandwidth())
+      .attr("height", function(d) { return height - y(d.value); })
+      .attr("fill", function(d) { return color(d.key); });
+
+
+
+      svg.append("text")
+    .attr("class", "x label")
+    .attr("text-anchor", "end")
+    .attr("x", 390)
+    .attr("y", 415)
+    .text("Age wise victimes probability Distribution");
+
+    svg.append("text")
+    .attr("class", "x label")
+    .attr("text-anchor", "end")
+    .attr("x", -70)
+    .attr("y", -30)
+    .attr("transform", "rotate(-90)")
+    .text("Number of deaths");
+
+});
+
+
+</script>
+</body>
+</html>
