@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {box-sizing: border-box;}
+
+body { 
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.header {
+  overflow: hidden;
+  background-color: #f1f1f1;
+  padding: 20px 10px;
+}
+
+.header a {
+  float: left;
+  color: black;
+  text-align: center;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px; 
+  line-height: 25px;
+  border-radius: 4px;
+}
+
+.header a.logo {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.header a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.header a.active {
+  background-color: dodgerblue;
+  color: white;
+}
+
+.header-right {
+  float: right;
+}
+
+@media screen and (max-width: 500px) {
+  .header a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+  
+  .header-right {
+    float: none;
+  }
+}
+footer {
+  text-align: center;
+  padding: 3px;
+  background-color:#f1f1f1 ;
+  
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  
+  <div class="header-right">
+    <a class="active" href="#home">Documentation</a>
+    <a href="https://public.tableau.com/app/profile/manogna.gurijala/viz/FinalProject-EmployeeAttrition/EAR?publish=yes">Visualization Design</a>
+    <a href="#about">Video</a>
+  </div>
+</div>
+
+<div style=" width:70%;background: #f1f1f1;margin-left:15% ;">
+  <h1 style="text-align: center;" >Data Visualization Design Analysis</h1>
+  <h2 style="text-align: " >Project Name : Analyzing Employee Attrition</h2>
+  <h2 style="text-align: " >Team : Sri Manogna Gurijala , Neelesh Reddypelli.</h2>
+  <p>Attrition is the departure of employees from an organization for any reason, including termination,death or retirement. We have chosen HR Employees attritions data from kaggle.</p>
+  <h3 style="text-align: " >Problem Statement:</h3>
+  <p> Attrition is one common concern that any organization has and always wanted to take care of the numbers in terms of the employees to retain them in the organization. 
+With all the parameters present in the Dataset, our goal is to specify the factors that are affecting an organization in terms of its employee attrition.
+One such problem is the focus of Project 2. The data set is designed and collected to know the reasons behind the departure of the employees from the company for certain reasons. 
+It is a vast dataset that has both Numerical and categorical values in it.
+</p>
+<h3 style="text-align: " >Software Used: Tableau Desktop </h3>
+<h3 style="text-align: " >Dataset Background:</h3>
+<p>The data set consists of 35 different features with 1470 rows 
+ From 35 different features we have 15 Numerical columns and 20 categorical columns<br>
+ <center><img src="Images/one_1.png"></center>
+</p>
+<h3 style="text-align: " >Categorical Columns:</h3>
+<center><img src="Images/two_2.png"></center>
+<h3 style="text-align: " >Some of the Major column features and their explanation:</h3>
+<p> 'Age': The Age of the Employee.<br>
+'Attrition': Yes or No if the Attrition Happened<br>
+'Business travel': Contains 3 different values – Travel Rarely, Travel Frequently, Nontravel<br>
+'DailyRate': Numerical column which has the amount of daily rate.<br>
+'Department': Department of the employee.<br>
+'DistanceFromHome': Distance the employee lives from home.<br>
+'Education': 1- Below College, 2- College, 3-Bachelors, 4- Masters, 5- Doctorate.<br>
+'EducationField': Field of the education of employees.<br>
+'EmployeeNumber': Employee ID<br>
+'EnvironmentSatisfaction': Contains 4 different values – Low, Medium, High, Very high<br>
+'Gender': Two values, Male and Female<br>
+'Hourly rate': Hourly Rate paid to the employee.<br>
+'JobInvolvement', 'JobLevel', 'JobRole', 'job satisfaction,<br>
+'Marital status, 'MonthlyIncome', 'MonthlyRate', 'NumCompaniesWorked',<br>
+'Over18', 'OverTime', 'PercentSalaryHike', 'PerformanceRating',<br>
+'RelationshipSatisfaction', 'StandardHours', 'StockOptionLevel',<br>
+'TotalWorkingYears', 'TrainingTimesLastYear', 'WorkLifeBalance',<br>
+'YearsAtCompany', 'YearsInCurrentRole', 'YearsSinceLastPromotion',<br>
+'YearsWithCurrManager'
+</p>
+<h3>Questions:</h3>
+<p>Our Major goal is to find the reasons for employee attrition through our visualization. With the dataset we have and the major columns in it, we thought there are certain factors that can be major reasons for employee attrition in the organization. We as a team had an initial draft of how we can put our thoughts into visualization using Tableau and create interactivity using those visualizations.  </p>
+<h3>Detailed explanation for questions with the answers : <br>
+1.What is the Total attrition count?</h3>
+<center><img src="Images/Q1.png"></center>
+<p>Through our visualization, with the given records in the data, we have found that there are a total of  1470 employee records in the data out of which 1233 have not left the organization in a certain period whereas 237 employees have left the organization. To make sure our dashboard is simple and easy to understand for every person, we have included the up and down arrows to make it visually simple. </p>
+<h3>
+2.What is the effect of Job satisfaction on attrition? Does Job satisfaction lead to attrition?</h3>
+
+<p>From our understanding, we can see that JOB SATISFACTION plays a major role in attrition.
+	<center><img src="Images/Q2_img.jpg"></center>
+	As attrition is the dependent variable it should be in the y-axis and job satisfaction being the independent variable should be on the x-axis. In the below Visualization, we can notice that people have been categorized into 4 different satisfaction levels ( Not satisfied, Neutral, Satisfied, and Extremely Satisfied). From the observation, it is clear that there is a high attrition rate for the people who are not satisfied with their job and also who are neutral with their opinion. 
+	<center><img src="Images/Q2.png"></center>
+<h3>a. Does the gender of a person affect attrition when compared to job satisfaction?</h3>
+<p>
+	Ans: From our observation, it is clear that the employee attrition rate changes with respect to gender. Below are the visualizations based on gender. 
+</p>
+<h3>Attrition for only female employees with respect to attrition</h3>
+<center><img src="Images/2a.png"></center>
+
+<h3>Attrition for only male employees with respect to attrition
+</h3>
+<center><img src="Images/2a1.png"></center>
+<p>When compared to both the visualizations above, it is clear that Female employees who are not satisfied with their job are more likely to become attrition. </p>
+<h3>B.  How is environmental satisfaction affecting attrition?</h3>
+<p>Ans: From our visualization, we have observed that environmental satisfaction plays a major role with respect to an employee leaving or staying in the organization. Below are the visualizations for both males and females. About 25.35% of the employees irrespective of gender tend to be attrition and are not satisfied with their job.</p>
+<center><img src="Images/Q2b.jpg"></center>
+<center><img src="Images/Q2b.png"></center>
+</p>
+<p><h3>C. Environment satisfaction Vs attrition with respect to Gender.</h3><br>
+Report for females: 24.78% of total females tend to become attrition due to not being satisfied in the environment they are working. 
+<center><img src="Images/2c.png"></center><br>
+
+Reports for Males with respect to Environment satisfaction - Around 25.73% of total males tend to attrition.<br>
+
+<center><img src="Images/2ci.png"></center><br>
+<h3>3.Does the distance from home to the office lead to attrition? </h3>
+
+Ans: When we realized that we had a column that specifies the distance, we were very interested to know if that led to attrition. To our surprise,16.12% of people who stay 10 miles and more from the office tend to leave the organization quite soon. <br><br>
+
+The above questions had the respective answers through direct visualizations, but then later on we decided to use the amazing features that Tableau had. We decided to use the multi-level of detail drilling by using the filters to increase the interactivity between all the factors that lead to attrition. That is when we introduced the multi-level filters as shown below.<br><br>
+
+<center><img src="Images/3a.png"></center><br>
+
+These filters can be used at any point of the visualization to check the reports among the multiple factors. Below are the questions that have been answered using the amazing tableau dashboard interactivity features<br><br>
+
+
+<h3>4. What is the relation between marital status, attrition, and Job satisfaction</h3>
+
+
+Ans: Here we had an idea to put a pie chart to make it visually simple. But while we were investigating a better comparison, we realized that the bar chart makes more sense and is simple. <br><br>
+<center><img src="Images/4.jpg"></center><br>
+<center><img src="Images/4a1.png"></center><br>
+
+From this report, it is very evident that more single people ( Both male and female) tend to attrition more often in the organization which is almost 25.53% of the population. 
+
+<h3>a. What percent of married Males and Females tend to leave the organization?</h3><br>
+Ans: Report for male and Married people attrition- Almost 13.22% of the Male population tends to attrition which is around 53 male employees.<br><br>
+
+
+<center><img src="Images/4a.png"></center>
+
+Report for Female and Married People: Around 11.40% of female married employees tend to leave the organization quite often of count around 31 employees. 
+
+<center><img src="Images/4a2.png"></center>
+
+
+From the above comparison, we can see that Married male employees tend to be more attrition. <br>
+
+
+
+<h3>b. What percentage of the divorced population who are satisfied with the environment, but are not satisfied with Jobs tend to attrition?</h3><br>
+Ans: According to the below reports, around 6.82% ( Count of 3)  of the divorced population who are satisfied with the environment, but are not satisfied with the Job tend to become attrition. To be very precise, the 3 of them are likely to be Men.<br>
+
+<center><img src="Images/4a3.png"></center><br>
+<h3>5. What percentage of salary hike leads to attrition? </h3><br>
+Ans: The salary distribution had been categorized into 4 different types. Out of which the people with low salary hikes (9-12%)  tend to attrition more for many obvious reasons. The second most people who tend to attrition is a 15-18% of salary hike<br>
+
+<center><img src="Images/5.png"></center>
+
+<h3>b.What percentage of Single men, who are extremely satisfied with their Job, but are getting the least salary hike, still don't leave the organization? </h3>
+Ans: As shown in the below observation, it is evident that 5 out of the total single men, who are extremely satisfied in their job, but have been given less hike still tend to stay in the organization. <br><br>
+
+<center><img src="Images/5a.png"></center>
+
+<h3>C. What are the statistics of Attrition based on Gender, Job satisfaction, and the daily wage rate? </h3>
+Ans : 
+
+<center><img src="Images/5c.png"></center>
+
+<h3>6. Compare the attribution Rate geographically for both genders.</h3>
+Ans: The data had been populated by us to add an extra feature to the reports. We have added the major states that compare the attrition for both male and female.
+
+<h3>a.What percentage of Married Males tend to attrition in all the states who get the most minor salary hike?</h3>
+Ans: We can see that the attrition is only in a few states for the respective filters. 
+
+<center><img src="Images/6a.png"></center>
+<h3>b.What percentage of single women tend to attrition in all the states who get the least salary hike but are extremely satisfied with their jobs and neutral about the environment? What is their Avg Wage rate?</h3>
+
+Ans: When the above filters are applied, it is clear that the attrition is only in a single state which is California
+
+<center><img src="Images/6c.png"></center>
+<h3>Average Wage Rate : </h3>
+
+<center><img src="Images/6d.png"></center>
+
+<h3>7. a. What are the statistics for  Age wise Attrition count?</h3>
+
+<center><img src="Images/7.png"></center>
+From the above reports, we can see that people who are aged between 26-35 tend to attrition more, whereas people who are aged above 55 tend to leave the organization very rarely. <br>
+
+We have done many iteration on how the overall dashboard should look and how can we show interativity, Here is the final output of our overall dashboard:
+
+<center><img src="Images/overall.jpg"></center><br>
+<center><img src="Images/overall.png"></center>
+
+
+
+</p>
+
+
+
+</div>
+
+<footer>
+  <p>Authors: Neelesh Kumar Reddypelli and Manogna Gurijala<br>
+  <a href="mailto:hege@example.com"></a></p>
+</footer>
+
+</body>
+</html>
